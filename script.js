@@ -43,6 +43,7 @@ buttons.forEach((button) => {
             {
                 result = parseFloat(nums.join("")) * 
                 parseFloat(factor1.join(""));
+                display.textContent = result;
                 fontReduce();
             }
             if(operator === "/")
