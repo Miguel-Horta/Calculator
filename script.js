@@ -12,12 +12,13 @@ buttons.forEach((button) => {
         if(button.id === 'clear')
         {
             display.textContent = 0;
-            resetValues()
+            i = 0;
+            nums = [];
         }
         else if(button.id === 'delete'){
             if(i <= 1){
                 display.textContent = 0;
-                resetValues()
+                i = 0;
             }
             else{
                 nums.pop();
@@ -32,6 +33,7 @@ buttons.forEach((button) => {
                 result = parseFloat(nums.join("")) + 
                 parseFloat(factor1.join(""));
                 display.textContent = result;
+                
             }
             if(operator === "-")
             {
@@ -44,7 +46,12 @@ buttons.forEach((button) => {
                 result = parseFloat(nums.join("")) * 
                 parseFloat(factor1.join(""));
                 display.textContent = result;
-                fontReduce();
+                if (result.toString().length>11){
+                    let display = document.getElementById('display');
+                    let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
+                    let fontSize = parseFloat(style); 
+                    display.style.fontSize = (fontSize - 4) + 'px';
+                }
             }
             if(operator === "/")
             {
@@ -59,28 +66,32 @@ buttons.forEach((button) => {
             factor1 = nums;
             display.textContent = '+'
             operator = "+";
-            resetValues()
+            i = 0;
+            nums = [];
         }
         else if(button.id === '-')
         {
             factor1 = nums;
             display.textContent = '-'
             operator = "-";
-            resetValues()
+            i = 0;
+            nums = [];
         }
         else if(button.id === 'x')
         {
             factor1 = nums;
             display.textContent = 'x'
             operator = "*";
-            resetValues()
+            i = 0;
+            nums = [];
         }
         else if(button.id === '/')
         {
             factor1 = nums;
             display.textContent = '÷'
             operator = "/";
-            resetValues()
+            i = 0;
+            nums = [];
         }
         else if(button.id === '.')
         {
@@ -103,27 +114,17 @@ buttons.forEach((button) => {
         if(nums[0] !== '0'){
             nums[i] = num; 
             i++;   
-            fontReduce();
+            display.textContent = nums.join("");
+            if (i>11){
+                let display = document.getElementById('display');
+                let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
+                let fontSize = parseFloat(style); 
+                display.style.fontSize = (fontSize - 4) + 'px';
+            }
         }
     }
   });
 });
-
-function fontReduce(){
-    display.textContent = nums.join("");
-        if (i>11){
-            let display = document.getElementById('display');
-            let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
-            let fontSize = parseFloat(style); 
-            display.style.fontSize = (fontSize - 4) + 'px';
-        }
-}
-
-function resetValues(){
-    i = 0;
-    nums = [];
-}
-
 /* 
 OTHER FUNCTIONS
 
