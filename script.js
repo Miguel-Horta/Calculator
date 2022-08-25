@@ -14,6 +14,7 @@ buttons.forEach((button) => {
             display.textContent = 0;
             i = 0;
             nums = [];
+            dot = false;
         }
         else if(button.id === 'delete'){
             if(i <= 1){
@@ -21,6 +22,11 @@ buttons.forEach((button) => {
                 i = 0;
             }
             else{
+                const nums2 = String(nums).split("");
+                if(nums2[i] === '.')
+                {
+                    dot = false;
+                }
                 nums.pop();
                 i--;
                 display.textContent = nums.join("");
@@ -72,6 +78,7 @@ buttons.forEach((button) => {
                 nums = String(result).split("")
                 i = nums.size;
             }
+            dot = false;
         }
         else if(button.id === '+'){ 
             factor1 = nums;
@@ -110,12 +117,11 @@ buttons.forEach((button) => {
         }
         else if(button.id === '.')
         {
-            console.log(dot);
             if(dot === false){
                 const num = button.id;
+                console.log(nums);
                 nums[i] = num; 
-                i++;   
-                console.log(num);
+                i++;
                 display.textContent = nums.join("");
                 dot = true
             }
