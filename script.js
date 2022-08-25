@@ -3,7 +3,7 @@ const display = document.getElementById('display');
 
 display.textContent = 0;
 let nums = [], factor1 = []; 
-let i = 0, operator = "", result;
+let operator = "", result;
 
 buttons.forEach((button) => {
   
@@ -12,17 +12,15 @@ buttons.forEach((button) => {
         if(button.id === 'clear')
         {
             display.textContent = 0;
-            i = 0;
             nums = [];
         }
         else if(button.id === 'delete'){
-            if(i <= 1){
+            if(nums.length <= 1){
                 display.textContent = 0;
-                i = 0;
+                nums = [];
             }
             else{
                 nums.pop();
-                i--;
                 display.textContent = nums.join("");
             }
         }
@@ -40,7 +38,6 @@ buttons.forEach((button) => {
                     display.style.fontSize = (fontSize - 4) + 'px';
                 }
                 nums = String(result).split("")
-                i = nums.size;
             }
             else if(operator === "-")
             {
@@ -48,7 +45,6 @@ buttons.forEach((button) => {
                 parseFloat(nums.join(""));
                 display.textContent = result;
                 nums = String(result).split("")
-                i = nums.size;
             }
             else if(operator === "*")
             {
@@ -62,22 +58,19 @@ buttons.forEach((button) => {
                     display.style.fontSize = (fontSize - 4) + 'px';
                 }
                 nums = String(result).split("")
-                i = nums.size;
             }
-            else if(operator === "/" && i !== 0)
+            else if(operator === "/" && nums.length !== 0)
             {
                 result = parseFloat(factor1.join("")) / 
                 parseFloat(nums.join(""));
                 display.textContent = result;
                 nums = String(result).split("")
-                i = nums.size;
             }
         }
         else if(button.id === '+'){ 
             factor1 = nums;
             display.textContent = '+'
             operator = "+";
-            i = 0;
             nums = [];
         }
         else if(button.id === '-')
@@ -85,7 +78,6 @@ buttons.forEach((button) => {
             factor1 = nums;
             display.textContent = '-'
             operator = "-";
-            i = 0;
             nums = [];
         }
         else if(button.id === 'x')
@@ -93,7 +85,6 @@ buttons.forEach((button) => {
             factor1 = nums;
             display.textContent = 'x'
             operator = "*";
-            i = 0;
             nums = [];
         }
         else if(button.id === '/')
@@ -101,15 +92,13 @@ buttons.forEach((button) => {
             factor1 = nums;
             display.textContent = '÷'
             operator = "/";
-            i = 0;
             nums = [];
         }
         else if(button.id === '.')
         {
             if (!hasDot(nums)){
                 const num = button.id;
-                nums[i] = num; 
-                i++;
+                nums[nums.length] = num;
                 display.textContent = nums.join("");
             }
             
@@ -117,12 +106,11 @@ buttons.forEach((button) => {
     }
     else{
         const num = button.id
-        nums[i] = num; 
+        nums[nums.length] = num; 
         if(nums[0] !== '0'){
-            nums[i] = num; 
-            i++;   
+            nums[nums.length - 1] = num; 
             display.textContent = nums.join("");
-            if (i>11){
+            if (nums.length > 11){
                 let display = document.getElementById('display');
                 let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
                 let fontSize = parseFloat(style); 
@@ -160,12 +148,11 @@ document.addEventListener("keyup", function(event) {
     }
     else{
         keyPressed = parseInt(event.key);
-        nums[i] = keyPressed;
+        nums[nums.length] = keyPressed;
         if(nums[0] !== '0'){
-            nums[i] = keyPressed; 
-            i++;   
+            nums[nums.length - 1] = keyPressed;  
             display.textContent = nums.join("");
-            if (i>11){
+            if (nums.length > 11){
                 let display = document.getElementById('display');
                 let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
                 let fontSize = parseFloat(style); 
