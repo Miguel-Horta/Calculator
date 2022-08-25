@@ -3,7 +3,7 @@ const display = document.getElementById('display');
 
 display.textContent = 0;
 let nums = [], factor1 = []; 
-let i = 0, operator = "", result, dot = false;
+let i = 0, operator = "", result;
 
 buttons.forEach((button) => {
   
@@ -14,7 +14,6 @@ buttons.forEach((button) => {
             display.textContent = 0;
             i = 0;
             nums = [];
-            dot = false;
         }
         else if(button.id === 'delete'){
             if(i <= 1){
@@ -22,11 +21,6 @@ buttons.forEach((button) => {
                 i = 0;
             }
             else{
-                const nums2 = String(nums).split("");
-                if(nums2[i] === '.')
-                {
-                    dot = false;
-                }
                 nums.pop();
                 i--;
                 display.textContent = nums.join("");
@@ -78,7 +72,6 @@ buttons.forEach((button) => {
                 nums = String(result).split("")
                 i = nums.size;
             }
-            dot = false;
         }
         else if(button.id === '+'){ 
             factor1 = nums;
@@ -86,7 +79,6 @@ buttons.forEach((button) => {
             operator = "+";
             i = 0;
             nums = [];
-            dot = false;
         }
         else if(button.id === '-')
         {
@@ -95,7 +87,6 @@ buttons.forEach((button) => {
             operator = "-";
             i = 0;
             nums = [];
-            dot = false;
         }
         else if(button.id === 'x')
         {
@@ -104,7 +95,6 @@ buttons.forEach((button) => {
             operator = "*";
             i = 0;
             nums = [];
-            dot = false;
         }
         else if(button.id === '/')
         {
@@ -113,17 +103,14 @@ buttons.forEach((button) => {
             operator = "/";
             i = 0;
             nums = [];
-            dot = false;
         }
         else if(button.id === '.')
         {
-            if(dot === false){
+            if (!hasDot(nums)){
                 const num = button.id;
-                console.log(nums);
                 nums[i] = num; 
                 i++;
                 display.textContent = nums.join("");
-                dot = true
             }
             
         }
@@ -187,6 +174,10 @@ document.addEventListener("keyup", function(event) {
         }
     }
 });
+
+function hasDot(arr) {
+    return arr.some(val => val === '.');
+  }
 
 /* 
 OTHER FUNCTIONS
