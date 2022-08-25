@@ -33,15 +33,18 @@ buttons.forEach((button) => {
                 result = parseFloat(nums.join("")) + 
                 parseFloat(factor1.join(""));
                 display.textContent = result;
-                
+                nums = Array.from(String(result), Number);
+                i = nums.size;
             }
-            if(operator === "-")
+            else if(operator === "-")
             {
                 result = parseFloat(factor1.join("")) - 
                 parseFloat(nums.join(""));
                 display.textContent = result;
+                nums = Array.from(String(result), Number);
+                i = nums.size;
             }
-            if(operator === "*")
+            else if(operator === "*")
             {
                 result = parseFloat(nums.join("")) * 
                 parseFloat(factor1.join(""));
@@ -52,14 +55,16 @@ buttons.forEach((button) => {
                     let fontSize = parseFloat(style); 
                     display.style.fontSize = (fontSize - 4) + 'px';
                 }
+                nums = Array.from(String(result), Number);
+                i = nums.size;
             }
-            if(operator === "/")
+            else if(operator === "/" && i !== 0)
             {
-                if(i !== 0){
-                    result = parseFloat(factor1.join("")) / 
-                    parseFloat(nums.join(""));
-                    display.textContent = result;
-                }
+                result = parseFloat(factor1.join("")) / 
+                parseFloat(nums.join(""));
+                display.textContent = result;
+                nums = Array.from(String(result), Number);
+                i = nums.size;
             }
         }
         else if(button.id === '+'){ 
