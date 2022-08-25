@@ -33,7 +33,13 @@ buttons.forEach((button) => {
                 result = parseFloat(nums.join("")) + 
                 parseFloat(factor1.join(""));
                 display.textContent = result;
-                nums = Array.from(String(result), Number);
+                if (result.toString().length>11){
+                    let display = document.getElementById('display');
+                    let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
+                    let fontSize = parseFloat(style); 
+                    display.style.fontSize = (fontSize - 4) + 'px';
+                }
+                nums = String(result).split("")
                 i = nums.size;
             }
             else if(operator === "-")
@@ -41,7 +47,7 @@ buttons.forEach((button) => {
                 result = parseFloat(factor1.join("")) - 
                 parseFloat(nums.join(""));
                 display.textContent = result;
-                nums = Array.from(String(result), Number);
+                nums = String(result).split("")
                 i = nums.size;
             }
             else if(operator === "*")
@@ -55,7 +61,7 @@ buttons.forEach((button) => {
                     let fontSize = parseFloat(style); 
                     display.style.fontSize = (fontSize - 4) + 'px';
                 }
-                nums = Array.from(String(result), Number);
+                nums = String(result).split("")
                 i = nums.size;
             }
             else if(operator === "/" && i !== 0)
@@ -63,7 +69,7 @@ buttons.forEach((button) => {
                 result = parseFloat(factor1.join("")) / 
                 parseFloat(nums.join(""));
                 display.textContent = result;
-                nums = Array.from(String(result), Number);
+                nums = String(result).split("")
                 i = nums.size;
             }
         }
@@ -73,6 +79,7 @@ buttons.forEach((button) => {
             operator = "+";
             i = 0;
             nums = [];
+            dot = false;
         }
         else if(button.id === '-')
         {
@@ -81,6 +88,7 @@ buttons.forEach((button) => {
             operator = "-";
             i = 0;
             nums = [];
+            dot = false;
         }
         else if(button.id === 'x')
         {
@@ -89,6 +97,7 @@ buttons.forEach((button) => {
             operator = "*";
             i = 0;
             nums = [];
+            dot = false;
         }
         else if(button.id === '/')
         {
@@ -97,9 +106,11 @@ buttons.forEach((button) => {
             operator = "/";
             i = 0;
             nums = [];
+            dot = false;
         }
         else if(button.id === '.')
         {
+            console.log(dot);
             if(dot === false){
                 const num = button.id;
                 nums[i] = num; 
@@ -108,13 +119,11 @@ buttons.forEach((button) => {
                 display.textContent = nums.join("");
                 dot = true
             }
-            else{
-                dot = false;
-            }
+            
         }
     }
     else{
-        const num = button.id;
+        const num = button.id
         nums[i] = num; 
         if(nums[0] !== '0'){
             nums[i] = num; 
@@ -130,6 +139,49 @@ buttons.forEach((button) => {
     }
   });
 });
+
+document.addEventListener("keyup", function(event) {
+    if(isNaN(event.key)){
+        if(event.key === '+'){ 
+            document.getElementById("+").click();
+        }
+        else if(event.key === '-')
+        {
+            document.getElementById("-").click();
+        }
+        else if(event.key === '*')
+        {
+            document.getElementById("x").click();
+        }
+        else if(event.key === '/')
+        {
+            document.getElementById("/").click();
+        }
+        else if(event.key === '.')
+        {
+            document.getElementById(".").click();
+        }
+        else if (event.key === 'Enter'){ 
+            document.getElementById("=").click();
+        }
+    }
+    else{
+        keyPressed = parseInt(event.key);
+        nums[i] = keyPressed;
+        if(nums[0] !== '0'){
+            nums[i] = keyPressed; 
+            i++;   
+            display.textContent = nums.join("");
+            if (i>11){
+                let display = document.getElementById('display');
+                let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
+                let fontSize = parseFloat(style); 
+                display.style.fontSize = (fontSize - 4) + 'px';
+            }
+        }
+    }
+});
+
 /* 
 OTHER FUNCTIONS
 
