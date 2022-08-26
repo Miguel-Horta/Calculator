@@ -3,7 +3,7 @@ const display = document.getElementById('display');
 
 display.textContent = 0;
 let nums = [], factor1 = []; 
-let operator = "", result;
+let operator = "", result = 0;
 
 buttons.forEach((button) => {
   
@@ -13,6 +13,9 @@ buttons.forEach((button) => {
         {
             display.textContent = 0;
             nums = [];
+            result = 0;
+            factor1 = [];
+            operator = "";
         }
         else if(button.id === 'delete'){
             if(nums.length <= 1){
@@ -30,14 +33,14 @@ buttons.forEach((button) => {
             {
                 result = parseFloat(nums.join("")) + 
                 parseFloat(factor1.join(""));
-                display.textContent = result;
-                if (result.toString().length>11){
-                    let display = document.getElementById('display');
-                    let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
-                    let fontSize = parseFloat(style); 
-                    display.style.fontSize = (fontSize - 4) + 'px';
+                if(result.toString().length > 11)
+                {
+                    display.textContent = 'Out of limit';
                 }
-                nums = String(result).split("")
+                else{
+                    display.textContent = result;
+                    nums = String(result).split("")
+                }
             }
             else if(operator === "-")
             {
@@ -50,14 +53,14 @@ buttons.forEach((button) => {
             {
                 result = parseFloat(nums.join("")) * 
                 parseFloat(factor1.join(""));
-                display.textContent = result;
-                if (result.toString().length>11){
-                    let display = document.getElementById('display');
-                    let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
-                    let fontSize = parseFloat(style); 
-                    display.style.fontSize = (fontSize - 4) + 'px';
+                if(result.toString().length > 11)
+                {
+                    display.textContent = 'Out of limit';
                 }
-                nums = String(result).split("")
+                else{
+                    display.textContent = result;
+                    nums = String(result).split("")
+                }
             }
             else if(operator === "/" && nums.length !== 0)
             {
@@ -98,24 +101,17 @@ buttons.forEach((button) => {
         {
             if (!hasDot(nums)){
                 const num = button.id;
-                nums[nums.length] = num;
+                nums.push(num);
                 display.textContent = nums.join("");
             }
-            
         }
     }
     else{
         const num = button.id
-        nums[nums.length] = num; 
+        nums.push(num); 
         if(nums[0] !== '0'){
             nums[nums.length - 1] = num; 
-            display.textContent = nums.join("");
-            if (nums.length > 11){
-                let display = document.getElementById('display');
-                let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
-                let fontSize = parseFloat(style); 
-                display.style.fontSize = (fontSize - 4) + 'px';
-            }
+            tooBig();
         }
     }
   });
@@ -144,20 +140,16 @@ document.addEventListener("keyup", function(event) {
         }
         else if (event.key === 'Enter'){ 
             document.getElementById("=").click();
+            
         }
     }
     else{
         keyPressed = parseInt(event.key);
+        if (nums.length === 0 && keyPressed === '0') {
+          return;
+        } else {
         nums[nums.length] = keyPressed;
-        if(nums[0] !== '0'){
-            nums[nums.length - 1] = keyPressed;  
-            display.textContent = nums.join("");
-            if (nums.length > 11){
-                let display = document.getElementById('display');
-                let style = window.getComputedStyle(display, null).getPropertyValue('font-size');
-                let fontSize = parseFloat(style); 
-                display.style.fontSize = (fontSize - 4) + 'px';
-            }
+            tooBig();
         }
     }
 });
@@ -166,6 +158,12 @@ function hasDot(arr) {
     return arr.some(val => val === '.');
   }
 
+function tooBig(){
+    const nums2 = nums.toString().substring(0,21).replaceAll(',', '');
+    display.textContent = nums2;
+    nums = String(nums2).split("");
+    console.log(nums);
+}
 /* 
 OTHER FUNCTIONS
 

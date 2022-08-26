@@ -3,6 +3,10 @@
     justify-content: center;
     align-items: center;
 }
+/* button:focus{
+    outline: none;
+    box-shadow: none;
+} */
 #display{
     font-family:Arial, Helvetica, sans-serif;
     display: flex;
